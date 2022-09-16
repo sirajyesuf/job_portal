@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('skills', function (Blueprint $table) {
+        Schema::create('category_job', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->unsignedBigInteger('profession_id');
-            $table->foreign('profession_id')->references('id')->on('educations')->cascadeOnDelete();
-            $table->softDeletes();
+            $table->unsignedBigInteger('job_id');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('job_id')->references('id')->on('jobs');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skills');
+        Schema::dropIfExists('category_job');
     }
 };

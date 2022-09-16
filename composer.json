@@ -11,9 +11,9 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "oddvalue/laravel-drafts": "^0.0.3",
         "spatie/enum": "^3.13",
         "spatie/laravel-options": "^1.0"
-
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

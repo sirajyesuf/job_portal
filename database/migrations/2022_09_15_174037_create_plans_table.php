@@ -13,12 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('education', function (Blueprint $table) {
+        Schema::create('plans', function (Blueprint $table) {
             $table->id();
+            $table->enum('duration',[30,365]);
+            $table->integer('number_jobs')->nullable();
+            $table->integer('price');
             $table->string('name');
-            $table->enum('type',['field_of_study','education_level','carrer_level','profession','employment_type']);
-            $table->softDeletes();
+            $table->string('icon');
+            $table->boolean('post_on_telegram')->nullable();
+            $table->enum('type',['job','featuring']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('education');
+        Schema::dropIfExists('plans');
     }
 };

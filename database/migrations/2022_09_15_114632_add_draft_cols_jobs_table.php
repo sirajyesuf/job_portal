@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('skills', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
-            $table->unsignedBigInteger('profession_id');
-            $table->foreign('profession_id')->references('id')->on('educations')->cascadeOnDelete();
-            $table->softDeletes();
-            $table->timestamps();
+        Schema::table('jobs', function (Blueprint $table) {
+            $table->drafts();
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skills');
+        Schema::table('jobs', function (Blueprint $table) {
+            $table->drafts();
+        });
     }
 };

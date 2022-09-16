@@ -1,30 +1,30 @@
 <?php
 
-namespace App\Filament\Resources\EducationResource\RelationManagers;
+namespace App\Filament\Resources;
 
+use App\Filament\Resources\CategoryResource\Pages;
+use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Models\Category;
 use Filament\Forms;
 use Filament\Resources\Form;
-use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Enums\EducationType;
-use Illuminate\Database\Eloquent\Model;
 
-class SkillsRelationManager extends RelationManager
+class CategoryResource extends Resource
 {
-    protected static string $relationship = 'skills';
-
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $model = Category::class;
+    protected static ?string $navigationGroup = 'Data';
+    protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+                ->required(),
             ]);
     }
 
@@ -33,14 +33,13 @@ class SkillsRelationManager extends RelationManager
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
+
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make()
-            ])
-            ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
@@ -51,18 +50,20 @@ class SkillsRelationManager extends RelationManager
                 Tables\Actions\RestoreBulkAction::make(),
                 Tables\Actions\ForceDeleteBulkAction::make(),
             ]);
+    }
+    
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ManageCategories::route('/'),
+        ];
     }    
     
-    protected function getTableQuery(): Builder
+    public static function getEloquentQuery(): Builder
     {
-        return parent::getTableQuery()
+        return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
-    }
-
-    public static function canViewForRecord(Model $ownerRecord): bool
-    {
-    return $ownerRecord->type == EducationType::Profession->value;
     }
 }
