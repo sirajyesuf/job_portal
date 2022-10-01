@@ -10,6 +10,9 @@ class Education extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $table="educations";
+
+
     protected $guarded = [];
 
     public function skills(){

@@ -62,10 +62,7 @@ class SkillsRelationManager extends RelationManager
     }
 
     public static function canViewForRecord(Model $ownerRecord): bool
-{
-
-   
-
+    {
     return $ownerRecord->type == EducationType::Profession->value;
-}
+    }
 }

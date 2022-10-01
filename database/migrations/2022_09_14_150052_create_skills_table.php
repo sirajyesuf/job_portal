@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->unsignedBigInteger('profession_id');
-            $table->foreign('profession_id')->references('id')->on('education')->cascadeOnDelete();
+            $table->foreign('profession_id')->references('id')->on('educations')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });
