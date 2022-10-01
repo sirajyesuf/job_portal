@@ -41,20 +41,17 @@ class JopPlanResource extends Resource
                                 ->unique(Plan::class, 'name', ignoreRecord: true),
                                 Forms\Components\Select::make('duration')
                                 ->options(collect(Options::forEnum(PlanDuration::class))->pluck('label','value')),
+                                Forms\Components\Textarea::make('description')
+                                ->cols(2)
+                                ->rows(2)
+                                ->columnSpan(2),
                             Forms\Components\TextInput::make('price')
                                 ->required(),
                             Forms\Components\TextInput::make('number_jobs')
                                 ->hint('leave empty for unlimited job'),
                         ])
                         ->columns(2),
-                    Forms\Components\Section::make('Icon')
-                        ->schema([
-                            Forms\Components\FileUpload::make('icon')
-                            ->image()
-                            ->directory('plan_icons')
-                            ->columnSpan('full'),
-                        ])
-                        ->columns(2),
+
                 ])
                 ->columnSpan(['lg' => 2]),
 

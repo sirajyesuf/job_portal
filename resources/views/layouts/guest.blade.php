@@ -14,8 +14,11 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
+        @include('partials/nav')
         <div class="font-sans text-gray-900 antialiased">
             {{ $slot }}
         </div>
+    
+        <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
     </body>
 </html>
