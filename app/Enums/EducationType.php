@@ -21,7 +21,8 @@ class EducationType extends Enum
             'EducationLevel' => 'education_level',
             'CarrerLevel' => 'carrer_level',
             'Profession'  => 'profession',
-            'EmploymentType' => 'employment_type'
+            'EmploymentType' => 'employment_type',
+            'WorkExperiance' => 'work_experiance'
         ];
     }
 }

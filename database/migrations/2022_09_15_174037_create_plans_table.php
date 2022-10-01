@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
             $table->enum('duration',[30,365]);
+            $table->string('description');
             $table->integer('number_jobs')->nullable();
             $table->integer('price');
             $table->string('name');
-            $table->string('icon');
             $table->boolean('post_on_telegram')->nullable();
             $table->enum('type',['job','featuring']);
             $table->timestamps();

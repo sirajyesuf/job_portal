@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,24 +10,27 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use \Spatie\Onboard\Concerns\GetsOnboarded;
+use \Spatie\Onboard\Concerns\Onboardable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable
+class User extends Authenticatable implements  \Spatie\Onboard\Concerns\Onboardable
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use \Spatie\Onboard\Concerns\GetsOnboarded;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    protected $guarded = [
+       
     ];
 
     /**
@@ -58,4 +62,16 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function jobSeekerProfile(){
+        return $this->hasOne(JobSeekerProfile::class);
+    }
+
+    public function employerProfile(){
+        return $this->hasOne(EmployerProfile::class);
+    }
+
+
+
+
 }

@@ -9,12 +9,12 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
-
+        <style>[x-cloak] { display: none !important; }</style>
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-        <!-- Styles -->
         @livewireStyles
+        @livewireScripts
+        @stack('scripts')
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
@@ -36,9 +36,7 @@
                 {{ $slot }}
             </main>
         </div>
-
+        @livewire('notifications')
         @stack('modals')
-
-        @livewireScripts
     </body>
 </html>

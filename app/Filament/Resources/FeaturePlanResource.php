@@ -37,21 +37,18 @@ class FeaturePlanResource extends Resource
                             Forms\Components\TextInput::make('name')
                                 ->required()
                                 ->unique(Plan::class, 'name', ignoreRecord: true),
-                                Forms\Components\Select::make('duration')
+                            Forms\Components\Select::make('duration')
                                 ->options(collect(Options::forEnum(PlanDuration::class))->pluck('label','value')),
                             Forms\Components\TextInput::make('price')
                                 ->required(),
+                            Forms\Components\Textarea::make('description')
+                                ->cols(2)
+                                ->rows(2)
+                      
 
                         ])
-                        ->columns(1),
-                    Forms\Components\Section::make('Icon')
-                        ->schema([
-                            Forms\Components\FileUpload::make('icon')
-                            ->image()
-                            ->directory('plan_icons')
-                            ->columnSpan('full'),
-                        ])
-                        ->columns(1),
+                        ->columns(2)
+                        
                 ])
                 ->columnSpan(3),
 

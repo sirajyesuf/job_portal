@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('educations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('type',['field_of_study','education_level','carrer_level','profession','employment_type']);
+            $table->enum('type',['field_of_study','education_level','carrer_level','profession','employment_type','work_experiance']);
             $table->softDeletes();
             $table->timestamps();
         });
