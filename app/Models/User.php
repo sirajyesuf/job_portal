@@ -13,6 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 use \Spatie\Onboard\Concerns\GetsOnboarded;
 use \Spatie\Onboard\Concerns\Onboardable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use MBarlow\Megaphone\HasMegaphone;
 
 class User extends Authenticatable implements  \Spatie\Onboard\Concerns\Onboardable
 {
@@ -23,6 +24,8 @@ class User extends Authenticatable implements  \Spatie\Onboard\Concerns\Onboarda
     use TwoFactorAuthenticatable;
     use \Spatie\Onboard\Concerns\GetsOnboarded;
     use SoftDeletes;
+    use Notifiable;
+    use HasMegaphone;
 
     /**
      * The attributes that are mass assignable.
@@ -70,6 +73,13 @@ class User extends Authenticatable implements  \Spatie\Onboard\Concerns\Onboarda
     public function employerProfile(){
         return $this->hasOne(EmployerProfile::class);
     }
+
+    public function orders(){
+
+        return $this->hasMany(Order::class,'employer_id');
+    }
+
+
 
 
 

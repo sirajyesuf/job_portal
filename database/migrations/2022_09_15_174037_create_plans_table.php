@@ -20,8 +20,8 @@ return new class extends Migration
             $table->integer('number_jobs')->nullable();
             $table->integer('price');
             $table->string('name');
-            $table->boolean('post_on_telegram')->nullable();
-            $table->enum('type',['job','featuring']);
+            $table->boolean('post_on_telegram_channel')->nullable();
+            $table->boolean('featured_employer_on_the_homepage')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

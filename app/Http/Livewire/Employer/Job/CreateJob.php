@@ -5,16 +5,31 @@ namespace App\Http\Livewire\Employer\Job;
 use Livewire\Component;
 use Filament\Forms;
 use Illuminate\Support\Str;
+use App\Models\Education;
+use App\Enums\EducationType;
+
 class CreateJob extends Component implements forms\Contracts\HasForms
 {
     use Forms\Concerns\InteractsWithForms;
 
     public $title;
+    public $slug;
+    public $description;
+    public $requirement;
+    public $salary;
+    public $number_position;
+    public $how_to_apply;
+    public $location_id;
+
+
+
+    public $education_id;
 
     public function render()
     {
         return view('livewire.employer.job.create-job');
     }
+    
     protected function getFormSchema(): array 
     {
         return [
@@ -47,12 +62,14 @@ class CreateJob extends Component implements forms\Contracts\HasForms
         Forms\Components\Section::make('Salary')
             ->schema([
                 Forms\Components\TextInput::make('salary')
-                    ->default('As per the Company Scale')
+                    ->datalist([
+                        'Negotiable(Attractive)',
+                        'Based on the company scale'
+                    ])
                     ->required(),
                 Forms\Components\TextInput::make('number_position')
                     ->label('Number of Position')
                     ->numeric()
-                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                     ->required()
 
             ])
@@ -70,15 +87,14 @@ class CreateJob extends Component implements forms\Contracts\HasForms
         Forms\Components\Section::make('Job Seeker')
             ->schema([
                 Forms\Components\Select::make('location_id')
-                    ->relationship('location','name')
-                    ->searchable(),
-                Forms\Components\Select::make('education_id')
-                    ->relationship('education','name')
-                    ->searchable(),
-
+                // ->options(Education::where('type',EducationType::CarrerLevel())->get()->pluck('name','id'))
+                ->relationship('location','name')
+                ->searchable(),
                 Forms\Components\MultiSelect::make('categories')
+                // ->options(Category::get()->pluck('name','id'))
                 ->relationship('categories','name')
                 ->required(),
+
             ])
             ])
             ->columnSpan(['lg' => 1])
@@ -88,5 +104,10 @@ class CreateJob extends Component implements forms\Contracts\HasForms
             
         ];
             
+    }
+
+    protected function getactio(): array
+    {
+        
     }
 }

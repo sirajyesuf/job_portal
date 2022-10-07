@@ -58,6 +58,10 @@ class JobResource extends Resource
                     Forms\Components\Section::make('Salary')
                         ->schema([
                             Forms\Components\TextInput::make('salary')
+                            ->datalist([
+                                'As per the Company Scale',
+                                'Negotiable (Attractive)',
+                            ])
                                 ->default('As per the Company Scale')
                                 ->required(),
                             Forms\Components\TextInput::make('number_position')
