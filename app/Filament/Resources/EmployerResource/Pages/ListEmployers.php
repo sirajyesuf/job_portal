@@ -9,6 +9,8 @@ use Filament\Resources\Pages\ListRecords;
 use Filament\Tables;
 use PhpOption\Option;
 use Spatie\LaravelOptions\Options;
+use STS\FilamentImpersonate;
+
 class ListEmployers extends ListRecords
 {
     protected static string $resource = EmployerResource::class;
@@ -18,6 +20,7 @@ class ListEmployers extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+
         ];
     }
 
@@ -40,4 +43,6 @@ class ListEmployers extends ListRecords
           ->options(collect(Options::forEnum(UserStatus::class))->pluck('label','value')->toArray())
         ];
     }
+
+
 }

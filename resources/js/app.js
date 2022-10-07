@@ -12,3 +12,4 @@ Alpine.plugin(FormsAlpinePlugin)
 window.Alpine = Alpine
 
 Alpine.start()
+ 

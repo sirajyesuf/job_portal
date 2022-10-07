@@ -21,8 +21,7 @@ use Spatie\LaravelOptions\Options;
 class JopPlanResource extends Resource
 {
     protected static ?string $model = Plan::class;
-    protected static ?string $navigationGroup = 'PLan';
-    protected static ?string $navigationLabel = 'JobPlan';
+    protected static ?string $navigationLabel = 'Plan';
     protected static ?string $slug = 'job_plan';
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
@@ -60,8 +59,12 @@ class JopPlanResource extends Resource
                     Forms\Components\Section::make('Telegram Channel')
                         ->schema([
                     
-                            Forms\Components\Toggle::make('post_on_telegram')
+                            Forms\Components\Toggle::make('post_on_telegram_channel')
                                 ->label('Post On Telegram Channel')
+                                ->default(now())
+                                ->required(),
+                            Forms\Components\Toggle::make('featured_employer_on_the_homepage')
+                                ->label('Featured Employer On The Homepage')
                                 ->default(now())
                                 ->required()
                             
@@ -84,7 +87,9 @@ class JopPlanResource extends Resource
                 ->label('Price (ETB)'),
                 Tables\Columns\TextColumn::make('number_job')
                 ->formatStateUsing(fn (string|null $state)  => is_null($state) ?  'UnLimited' : $state),
-                Tables\Columns\BooleanColumn::make('post_on_telegram'),
+                Tables\Columns\BooleanColumn::make('post_on_telegram_channel'),
+                Tables\Columns\BooleanColumn::make('featured_employer_on_the_homepage'),
+
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -120,7 +125,6 @@ class JopPlanResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-        ->where('type',PlanType::Job()->value)
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

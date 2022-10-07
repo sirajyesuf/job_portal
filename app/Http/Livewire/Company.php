@@ -27,6 +27,7 @@ class Company extends Component  implements forms\Contracts\HasForms
     public $telegram;
     public $youtube;
     public $tiktok;
+    public $logo;
     
     public function mount(){
 
@@ -54,6 +55,7 @@ class Company extends Component  implements forms\Contracts\HasForms
                 'telegram' => $this->employer_profile->telegram,
                 'tiktok' => $this->employer_profile->tiktok,
                 'youtube' => $this->employer_profile->youtube,
+                'logo'   => $this->employer_profile->logo
              ]);
 
          }
@@ -70,7 +72,6 @@ class Company extends Component  implements forms\Contracts\HasForms
     protected function getBasicFormSchema(): array 
     {
         return [
-            // Forms\Components\FileUpload::make('logo'),
             Forms\Components\TextInput::make('company_name')->required(),
             Forms\Components\TextInput::make('agency_license_number')->required(),
             Forms\Components\TextInput::make('primary_phone_number')->required(),
@@ -101,6 +102,8 @@ class Company extends Component  implements forms\Contracts\HasForms
             ->url(),
             Forms\Components\TextInput::make('youtube')
             ->url(),
+            Forms\Components\FileUpload::make('logo')
+            ->image(),
         ];
 
     }

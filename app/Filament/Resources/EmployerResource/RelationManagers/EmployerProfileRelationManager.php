@@ -75,6 +75,11 @@ class EmployerProfileRelationManager extends RelationManager
     {
         return false;
     }
+
+    protected function getTableEmptyStateHeading(): ?string
+    {
+        return 'No company profile yet';
+    }
     
     
     

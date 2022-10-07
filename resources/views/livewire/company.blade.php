@@ -45,7 +45,6 @@
 
     <x-slot name="form">
         {{ $this->addressForm }}
-
     </x-slot>
 
     <x-slot name="actions">

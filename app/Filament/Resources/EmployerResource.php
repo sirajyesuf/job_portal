@@ -13,6 +13,7 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use STS\FilamentImpersonate\Impersonate;
 
 class EmployerResource extends Resource
 {
@@ -21,6 +22,8 @@ class EmployerResource extends Resource
     protected static ?string $navigationLabel = 'Employer';
     protected static ?string $slug = 'employer';
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $label = 'Employer';
+
 
     public static function form(Form $form): Form
     {
@@ -42,6 +45,8 @@ class EmployerResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Impersonate::make('impersonate'), // <---
+
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

@@ -8,6 +8,7 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Forms;
+use STS\FilamentImpersonate\Impersonate;
 
 
 class ViewEmployer extends ViewRecord
@@ -28,16 +29,20 @@ class ViewEmployer extends ViewRecord
     {
         return [
             // Actions\EditAction::make(),
+            Actions\Action::make('Impersonate')
+            ->action(function () {
+                Impersonate::impersonate($this->record);
+            }),
             Actions\Action::make('Approve')
             ->requiresConfirmation()
             ->action('approveEmployer')
             ->color('success')
-            ->hidden($this->record->status == UserStatus::Approve()->value),
+            ->hidden($this->record->status == UserStatus::Approve()->value | is_null($this->record->employerProfile)),
             Actions\Action::make('Rejecte')
             ->requiresConfirmation()
             ->action('rejecteEmployer')
             ->color('danger')
-            ->hidden($this->record->status == UserStatus::Rejecte()->value),
+            ->hidden($this->record->status == UserStatus::Rejecte()->value | is_null($this->record->employerProfile)),
         ];
     }
 
