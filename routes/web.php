@@ -16,6 +16,13 @@ use App\Http\Livewire\Employer\Subscription\Checkout;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/mailable', function () {
+    $user = App\Models\User::first();
+    $order = App\Models\Order::first();
+ 
+    return new App\Mail\OrderConfirmation($order,$user);
+});
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -48,3 +55,6 @@ Route::middleware([
       
     });
 });
+
+
+

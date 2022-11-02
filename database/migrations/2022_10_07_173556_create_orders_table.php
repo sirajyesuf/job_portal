@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('invoice_date');
             $table->date('due_date');
             $table->enum('status',['paid','unpaid']);
+            $table->string('invoice_file_path');
             $table->unsignedBigInteger('employer_id');
             $table->unsignedBigInteger('plan_id');
             $table->foreign('employer_id')->references('id')->on('users');

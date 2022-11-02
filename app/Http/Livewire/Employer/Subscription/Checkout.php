@@ -9,7 +9,7 @@ use LaravelDaily\Invoices\Invoice;
 use App\Enums\InvoiceStatus;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
-
+use App\Services\GenerateInvoice;
 class Checkout extends Component
 {   
     public Plan $plan;
@@ -33,22 +33,47 @@ class Checkout extends Component
 
     }
 
+    public function generateInvoice(){
+
+
+
+    }
+
 
     public function createOrder()
     {
 
+        $data = [
+            'invoice_number' => Str::random(5),
+            'invoice_date' => Carbon::today(),
+            'due_date' => Carbon::today()->addDays(2),
+            'plan_id' => $this->plan->id,
+            'status' => InvoiceStatus::UnPaid()
+        ];
+
+        $invoice = GenerateInvoice::handle($data);
+
+        // dump($invoice->save());
+        // dump($invoice->url());
+
+
+
         $user = auth()->user();
         $order= $user->orders()->where('plan_id',$this->plan->id)->where('status',InvoiceStatus::UnPaid())->latest()->first();
-        if(is_null($order)){
-            // create new order 
 
-            $user->orders()->create([
+        if(is_null($order)){
+
+            $data = [
                 'invoice_number' => Str::random(5),
                 'invoice_date' => Carbon::today(),
                 'due_date' => Carbon::today()->addDays(2),
                 'plan_id' => $this->plan->id,
                 'status' => InvoiceStatus::UnPaid()
-            ]);
+            ];
+
+            $data = GenerateInvoice::handle($data);
+
+            $user->orders()->create($data);
         }
         elseif(Carbon::parse($order->due_date)->lessThan(Carbon::today())){
 
