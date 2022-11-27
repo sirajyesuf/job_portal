@@ -7,9 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\BaseUser;
 
-class Admin extends Authenticatable
+class Admin extends Authenticatable implements BaseUser
 {
+    public function isAdmin(){
+
+        return true;
+    }
+
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $guarded = [];

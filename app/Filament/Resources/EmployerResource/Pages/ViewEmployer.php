@@ -15,15 +15,7 @@ class ViewEmployer extends ViewRecord
 {
     protected static string $resource = EmployerResource::class;
 
-    protected function getFormSchema(): array
-    {
-        return [
-            Forms\Components\TextInput::make('name'),
-            Forms\Components\TextInput::make('email'),
-
-
-        ];
-    }
+ 
 
     protected function getActions(): array
     {
@@ -82,5 +74,13 @@ class ViewEmployer extends ViewRecord
 
 
 
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            EmployerResource\Widgets\EmployerOverview::class,
+            EmployerResource\Widgets\PlanOverview::class
+        ];
     }
 }

@@ -6,6 +6,10 @@ use App\Http\Livewire\Employer\Job\CreateJob;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Employer\Subscription\Plan;
 use App\Http\Livewire\Employer\Subscription\Checkout;
+use App\Http\Livewire\Employer\Subscription\Payment;
+use App\Http\Livewire\Employer\Subscription\ConfirmYourPayment;
+use App\Http\Livewire\Employer\Dashboard;
+use App\Http\Livewire\Employer\Subscription\InvoiceDetail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,14 +40,20 @@ Route::middleware([
     'verified'
 ])->group(function () {
     
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->name('dashboard');
+
+    //employer dashboard
+    Route::get('/dashboard',Dashboard::class)->name('dashboard');
 
     Route::prefix('employer')->name('employer.')->middleware(['employer'])->group(function(){
         Route::get('/company',Company::class)->name('company');
         Route::get('/plans',Plan::class)->name('subscription');
         Route::get('/checkout/{plan}',Checkout::class)->name('checkout');
+        Route::get('/processed_payment/{order}',Payment::class)->name('processed_payment');
+        Route::get('/confirm_your_payment/{order}',ConfirmYourPayment::class)->name('confirm_your_payment');
+        Route::get('/invoice_detail/{order}',InvoiceDetail::class)->name('invoice_detail');
 
         //jobs
         Route::prefix('job')->name('jobs.')->group(function(){

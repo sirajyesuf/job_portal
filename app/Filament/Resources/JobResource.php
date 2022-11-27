@@ -6,6 +6,7 @@ use App\Enums\EducationType;
 use App\Filament\Resources\JobResource\Pages;
 use App\Filament\Resources\JobResource\RelationManagers;
 use App\Models\Category;
+use App\Models\Data;
 use App\Models\Education;
 use App\Models\Job;
 use App\Models\Location;
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Pages\Actions;
 use Illuminate\Support\Str;
+use Closure;
 
 class JobResource extends Resource
 {
@@ -46,9 +48,17 @@ class JobResource extends Resource
                                 ->unique(Job::class, 'slug', ignoreRecord: true),
 
                             Forms\Components\MarkdownEditor::make('description')
-                                ->columnSpan('full'),
+                                ->columnSpan('full')
+                                ->disableToolbarButtons([
+                                    'attachFiles',
+                                    'codeBlock',
+                                ]),
                             Forms\Components\MarkdownEditor::make('requirement')
-                                ->columnSpan('full'),
+                                ->columnSpan('full')
+                                ->disableToolbarButtons([
+                                    'attachFiles',
+                                    'codeBlock',
+                                ]),
                            
                         ])
                         ->columns(2),
@@ -77,7 +87,11 @@ class JobResource extends Resource
                     Forms\Components\Section::make('How To apply')
                         ->schema([
                             Forms\Components\MarkdownEditor::make('how_to_apply')
-                            ->columnSpan('full'),
+                            ->columnSpan('full')
+                            ->disableToolbarButtons([
+                                'attachFiles',
+                                'codeBlock',
+                            ]),
                         ])
                         ->columns(2),
                 ])
@@ -101,17 +115,30 @@ class JobResource extends Resource
                     Forms\Components\Section::make('Job Seeker')
                         ->schema([
                             Forms\Components\Select::make('location_id')
-                                // ->options(Education::where('type',EducationType::CarrerLevel())->get()->pluck('name','id'))
+                                ->label('Location')
                                 ->relationship('location','name')
-                                ->searchable(),
+                                // ->options(Location::get()->pluck('name','id'))
+                                ->searchable()
+                                ->preload()
+                                ->reactive(),
+                            Forms\Components\TextInput::make('address_two')
+                            ->label('Address2')
+                            ->required()
+                            ->hidden(fn (Closure $get) => $get('location_id') === null),
                             Forms\Components\Select::make('education_id')
-                                // ->options(Education::where('type',EducationType::CarrerLevel())->get()->pluck('name','id'))
-                                ->relationship('education','name')
+                                ->label('Carrer Level')
+                                ->options(Data::where('type',EducationType::CarrerLevel())->first()->contents()->pluck('name','id'))
                                 ->searchable(),
-
                             Forms\Components\MultiSelect::make('categories')
-                            // ->options(Category::get()->pluck('name','id'))
-                            ->relationship('categories','name')
+                            ->options(Category::get()->pluck('name','id'))
+                            ->required(),
+                            Forms\Components\Select::make('work_experiance_id')
+                            ->label('Work Experiance')
+                            ->options(Data::where('type',EducationType::WorkExperiance())->first()->contents()->pluck('name','id'))
+                            ->required(),
+                            Forms\Components\Select::make('employement_type_id')
+                            ->label('Employement Type')
+                            ->options(Data::where('type',EducationType::EmploymentType())->first()->contents()->pluck('name','id'))
                             ->required(),
                         ]),
                 ])
@@ -161,7 +188,6 @@ class JobResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->current()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

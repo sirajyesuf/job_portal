@@ -38,8 +38,10 @@ class PaymentMethodResource extends Resource
                 ->hidden(fn(Callable $get)=>$get('type') == PaymentMethodType::Wallet() ),
                 Forms\Components\TextInput::make('phone_number')
                 ->hidden(fn(Callable $get)=>$get('type') == PaymentMethodType::Bank() ),
-                Forms\Components\FileUpload::make('logo')->image()
+                Forms\Components\FileUpload::make('logo')
+                ->image()
                 ->directory('payment_method_logos')
+                ->required()
                 ->columnSpan(2)
 
             ]);

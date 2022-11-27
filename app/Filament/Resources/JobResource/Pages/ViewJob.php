@@ -23,21 +23,21 @@ class ViewJob extends ViewRecord
     }
 
 
-    protected function getActions(): array
-    {
-        return [
-            Actions\EditAction::make(),
-            Action::make('draft')
-            ->label('Draft')
-            ->action('draft')
-            ->visible($this->record->is_published),
-            Action::make('publishe')
-            ->label('Publishe')
-            ->action('publishe')
-            ->visible(!$this->record->is_published),
+    // protected function getActions(): array
+    // {
+    //     return [
+    //         Actions\EditAction::make(),
+    //         Action::make('draft')
+    //         ->label('Draft')
+    //         ->action('draft')
+    //         ->visible($this->record->is_published),
+    //         Action::make('publishe')
+    //         ->label('Publishe')
+    //         ->action('publishe')
+    //         ->visible(!$this->record->is_published),
 
-        ];
-    }
+    //     ];
+    // }
 
 
     public function publishe(){

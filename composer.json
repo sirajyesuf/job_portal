@@ -18,7 +18,6 @@
         "laraveldaily/laravel-invoices": "^3.0",
         "livewire/livewire": "^2.5",
         "mbarlow/megaphone": "^1.0",
-        "oddvalue/laravel-drafts": "^0.0.3",
         "spatie/enum": "^3.13",
         "spatie/laravel-onboard": "^2.3",
         "spatie/laravel-options": "^1.0",

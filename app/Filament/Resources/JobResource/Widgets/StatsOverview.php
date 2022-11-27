@@ -11,7 +11,7 @@ class StatsOverview extends BaseWidget
     {
         return [
                 Card::make('Number Click', '192.1k'),
-                Card::make('Number Proposals', '21%'),
+                Card::make('Number Proposals', '21'),
         ];
     }
 }

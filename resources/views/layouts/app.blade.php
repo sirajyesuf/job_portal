@@ -32,6 +32,9 @@
             <!-- Page Content -->
             <main>
                 {{ $slot }}
+                </div>
+      <p class="m-3 text-base text-gray-400 md:order-1 md:mt-2">&copy; 2020 Your Company, Inc. All rights reserved.</p>
+    </div>
             </main>
         </div>
         @livewireScripts

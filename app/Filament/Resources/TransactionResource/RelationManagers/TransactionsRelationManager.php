@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\EducationResource\RelationManagers;
+namespace App\Filament\Resources\TransactionResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -9,14 +9,12 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Enums\EducationType;
-use Illuminate\Database\Eloquent\Model;
 
-class SkillsRelationManager extends RelationManager
+class TransactionsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'skills';
+    protected static string $relationship = 'transactions';
 
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $recordTitleAttribute = 'id';
 
     public static function form(Form $form): Form
     {
@@ -24,6 +22,11 @@ class SkillsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->label('full name')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('payment_method')
+                    ->required()
+                    ->label('Payment Method')
                     ->maxLength(255),
             ]);
     }
@@ -32,10 +35,10 @@ class SkillsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('id'),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make()
+                //
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
@@ -43,26 +46,9 @@ class SkillsRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-                Tables\Actions\RestoreBulkAction::make(),
-                Tables\Actions\ForceDeleteBulkAction::make(),
             ]);
     }    
-    
-    protected function getTableQuery(): Builder
-    {
-        return parent::getTableQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
-    }
-
-    public static function canViewForRecord(Model $ownerRecord): bool
-    {
-    return $ownerRecord->type == EducationType::Profession->value;
-    }
 }

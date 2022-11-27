@@ -11,9 +11,13 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Widgets\Widget;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use STS\FilamentImpersonate\Impersonate;
+use App\Filament\Resources\EmployerResource\Widgets;
+use Filament\Resources\RelationManagers\RelationManager;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class EmployerResource extends Resource
 {
@@ -45,7 +49,7 @@ class EmployerResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Impersonate::make('impersonate'), // <---
+                Impersonate::make('impersonate'),
 
             ])
             ->bulkActions([
@@ -58,7 +62,9 @@ class EmployerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\EmployerProfileRelationManager::class
+            RelationManagers\EmployerProfileRelationManager::class,
+            RelationManagers\SubscriptionsRelationManager::class,
+            RelationManagers\JobsRelationManager::class
         ];
     }
     
@@ -70,7 +76,15 @@ class EmployerResource extends Resource
             'view' => Pages\ViewEmployer::route('/{record}'),
             'edit' => Pages\EditEmployer::route('/{record}/edit'),
         ];
-    }    
+    }
+    
+    public static function getWidgets(): array
+    {
+        return [
+            Widgets\EmployerOverview::class,
+            Widgets\PlanOverview::class
+        ];
+    }
     
     public static function getEloquentQuery(): Builder
     {

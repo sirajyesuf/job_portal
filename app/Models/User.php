@@ -14,9 +14,16 @@ use \Spatie\Onboard\Concerns\GetsOnboarded;
 use \Spatie\Onboard\Concerns\Onboardable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use MBarlow\Megaphone\HasMegaphone;
+use App\Enums\SubscriptionStatus;
+use App\Models\BaseUser;
 
-class User extends Authenticatable implements  \Spatie\Onboard\Concerns\Onboardable
+class User extends Authenticatable implements  \Spatie\Onboard\Concerns\Onboardable,BaseUser
 {
+    public function isAdmin(){
+
+        return false;
+    }
+    
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
@@ -77,6 +84,26 @@ class User extends Authenticatable implements  \Spatie\Onboard\Concerns\Onboarda
     public function orders(){
 
         return $this->hasMany(Order::class,'employer_id');
+    }
+
+    public function subscriptions(){
+        
+        return $this->hasMany(Subscription::class,'employer_id');
+    }
+
+    public function activePlan(){
+        $subscription = $this->subscriptions()->where('status',SubscriptionStatus::Active())->first();
+        return $subscription->plan();
+    }
+
+    public function isSubscriber(){
+
+        $this->subscriptions()->where('status',SubscriptionStatus::Active())->first() ? true : false;
+
+    }
+
+    public function jobs(){
+        return $this->hasMany(Job::class,'employer_id');
     }
 
 

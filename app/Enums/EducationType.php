@@ -10,6 +10,7 @@ use \Spatie\Enum\Enum;
  * @method static self CarrerLevel()
  * @method static self Profession()
  * @method static self EmploymentType()
+ * @method static self WorkExperiance()
  */
 class EducationType extends Enum
 {

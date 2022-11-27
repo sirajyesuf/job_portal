@@ -5,11 +5,13 @@ use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Plan;
+use App\Models\Order;
+use Carbon\Carbon;
+
 class  GenerateInvoice
 {
 
-    public static function handle(Array $data)
+    public static function handle(Order $order)
     {
         $user = auth()->user();
         $customer = new Party([
@@ -29,27 +31,26 @@ class  GenerateInvoice
 
         $items = [
             (new InvoiceItem())
-                ->title('Service 1')
-                ->description('Your product or service description')
-                ->pricePerUnit(Plan::find($data['plan_id'])->price)
+                ->title($order->plan->name)
+                ->description($order->plan->description)
+                ->pricePerUnit($order->plan->price)
         ];
 
 
         $invoice = Invoice::make('Invoice')
-            ->status(__('invoices::invoice.paid'))
+            ->status(__($order->status))
             ->sequence(667)
             ->serialNumberFormat('{SEQUENCE}')
             ->seller($client)
             ->buyer($customer)
-            ->date(now()->subWeeks(3))
+            ->date(Carbon::parse($order->invoice_date))
             ->dateFormat('m/d/Y')
-            ->payUntilDays(14)
-            ->currencySymbol('$')
-            ->currencyCode('USD')
+            ->payUntilDays(2)
+            ->currencyCode('ETB')
             ->currencyFormat('{SYMBOL}{VALUE}')
             ->currencyThousandsSeparator('.')
             ->currencyDecimalPoint(',')
-            ->filename($client->name . ' ' . $customer->name)
+            ->filename($order->invoice_number)
             ->addItems($items);
 
         

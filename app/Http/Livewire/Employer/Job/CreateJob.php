@@ -20,9 +20,6 @@ class CreateJob extends Component implements forms\Contracts\HasForms
     public $number_position;
     public $how_to_apply;
     public $location_id;
-
-
-
     public $education_id;
 
     public function render()
@@ -106,8 +103,5 @@ class CreateJob extends Component implements forms\Contracts\HasForms
             
     }
 
-    protected function getactio(): array
-    {
-        
-    }
+
 }

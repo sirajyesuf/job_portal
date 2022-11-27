@@ -47,7 +47,6 @@
     </template>
 
     <!-- yearly -->
-
        <template x-for="plan in yearly_plans">
     <div class="divide-y divide-gray-200 rounded-lg border border-gray-200 shadow-sm" x-show="active==2">
         <div class="p-6">

@@ -12,9 +12,12 @@ class Job extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    use HasDrafts;
 
     protected $guarded = [];
+    
+    protected $casts = [
+        'categories' => 'array',
+    ];
 
 
     protected static function booted()
