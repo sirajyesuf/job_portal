@@ -21,7 +21,7 @@ class Checkout extends Component
     {
      $this->user = auth()->user();
      $this->plan = $plan;
-     $this->active_plan_id = $this->user->activePlan->id;
+    //  $this->active_plan_id = $this->user->activePlan->id;
 
      $this->createOrder();
 

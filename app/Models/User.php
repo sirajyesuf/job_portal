@@ -91,10 +91,10 @@ class User extends Authenticatable implements  \Spatie\Onboard\Concerns\Onboarda
         return $this->hasMany(Subscription::class,'employer_id');
     }
 
-    public function activePlan(){
-        $subscription = $this->subscriptions()->where('status',SubscriptionStatus::Active())->first();
-        return $subscription->plan();
-    }
+    // public function activePlan(){
+    //     $subscription = $this->subscriptions()->where('status',SubscriptionStatus::Active())->first();
+    //     return $subscription->plan();
+    // }
 
     public function isSubscriber(){
 

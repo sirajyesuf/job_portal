@@ -10,6 +10,9 @@ class EmployerOverview extends Widget
 {
     protected static string $view = 'filament.resources.employer-resource.widgets.employer-overview';
     public ?Model $record = null;
+    protected int | string | array $columnSpan = 2;
+
+
     
     
 }

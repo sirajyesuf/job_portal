@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->enum('role',[UserRole::Employer()->value,UserRole::JobSeeker()->value]);
-            $table->enum('status',[UserStatus::Pending()->value,UserStatus::Approve()->value,UserStatus::Rejecte()->value]);
+            $table->enum('status',[UserStatus::Pending()->value,UserStatus::Approve()->value,UserStatus::Rejecte()->value,UserStatus::Block()->value]);
             $table->timestamps();
             $table->softDeletes();
         });

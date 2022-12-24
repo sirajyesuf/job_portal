@@ -20,7 +20,7 @@ class Plan extends Component
 
     public function mount(){
 
-        $this->employer_active_plan = auth()->user()->subscriptions()->where('status',SubscriptionStatus::Active())->first()->plan->id;
+        // $this->employer_active_plan = auth()->user()->subscriptions()->where('status',SubscriptionStatus::Active())->first()->plan->id;
         $this->monthly();
         $this->yearly();
     }
